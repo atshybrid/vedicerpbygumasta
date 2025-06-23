@@ -1,0 +1,178 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tax Invoice</title>
+    <style>
+      body { font-family: Arial, sans-serif; width: 80mm; padding: 5px;
+      font-size: 10.5px; line-height: 1.4; color: #000; min-height: unset;
+      box-sizing: border-box; } .center { text-align: center; } .right {
+      text-align: right; } .bold { font-weight: bold; } .line { border-top: 1px
+      dashed #000; margin: 6px 0; } .invoice-meta { display: flex;
+      justify-content: space-between; margin-bottom: 4px; font-size: 10px; }
+      table { width: 100%; border-collapse: collapse; margin-top: 6px; }
+      .logo-box { width: 50px; height: 50px; border-radius: 50%; overflow:
+      hidden; margin: 0 auto 6px; border: 1px solid #000; display: flex;
+      align-items: center; justify-content: center; } .logo-box img { width:
+      100%; height: auto; object-fit: cover; } th, td { padding: 5px 4px;
+      font-size: 10px; text-align: right; vertical-align: top; border: 1px solid
+      #000; } th:first-child, td:first-child { text-align: left; } .gst-header {
+      font-weight: bold; text-align: left; padding-top: 6px; } .summary-table,
+      .payment-table { width: 100%; margin-top: 5px; font-size: 10px; }
+      .summary-table td, .payment-table td { padding: 2px 4px; } .section-title
+      { text-align: center; font-weight: bold; font-size: 11px; margin-top: 8px;
+      } .footer { text-align: center; font-size: 10px; margin-top: 6px;
+      margin-bottom: 0; padding-bottom: 0;} .barcode { text-align: center;
+      margin-top: 8px; width: 70mm; max-width: 70mm; margin: 0 auto; overflow:
+      hidden; } .barcode img { width: 100% !important; max-width: 280px
+      !important; height: auto !important; display: block; margin: 0 auto;
+      }canvas#invoice-barcode { max-width: 100%; width: 100%; height: auto;
+      display: block; margin: 0 auto; }
+    </style>
+  </head>
+  <body>
+
+    <div class="center">
+      <div class="logo-box">
+        <img src="{{company.logo_url}}" alt="Logo" />
+      </div>
+      <div class="bold">{{company.name}}</div>
+      <div>{{company.address.line1}}</div>
+      <div>{{company.address.line2}}</div>
+      <div>{{company.state}}</div>
+      <div>Ph: {{company.phone}}</div>
+      <div>GST: {{company.gst}}</div>
+      {{!-- <div>CIN: {{company.cin}}</div>
+      <div>FSSAI: {{company.fssai}}</div> --}}
+    </div>
+
+    <div class="section-title">TAX INVOICE</div>
+
+    <div class="invoice-meta">
+      <div>
+        Invoice No:
+        <strong>{{invoice.number}}</strong><br />
+        Date:
+        <strong>{{invoice.date}}</strong>
+      </div>
+      <div class="right">
+        Cashier:
+        <strong>{{invoice.cashier}}</strong><br />
+        Time:
+        <strong>{{invoice.time}}</strong>
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Description / UOM / HSN</th>
+          <th>Qty</th>
+          <th>Rate</th>
+          <th>Disc</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each itemsByGST}}
+          <tr><td colspan="5" class="gst-header">GST {{@key}}%</td></tr>
+          {{#each this}}
+            <tr>
+              <td>{{name}} ({{variation}})<br />SKU: {{sku}}</td>
+              <td>{{qty}}</td>
+              <td>{{rate}}</td>
+              <td>{{discount}}</td>
+              <td>{{amount}}</td>
+            </tr>
+          {{/each}}
+        {{/each}}
+        <tr class="bold">
+          <td>Total</td>
+          <td>{{summary.totalQty}}</td>
+          <td>{{summary.totalRate}}</td>
+          <td>{{summary.totalDiscount}}</td>
+          <td>{{summary.totalAmount}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="line"></div>
+
+    <div class="section-title">TAX SUMMARY</div>
+    <table>
+      <thead>
+        <tr>
+          <th>GST</th>
+          <th>TaxAmt</th>
+          <th>SGST</th>
+          <th>CGST</th>
+          <th>Rate + Tax</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each taxSummary}}
+          <tr>
+            <td>{{rate}}%</td>
+            <td>{{tax}}</td>
+            <td>{{sgst}}</td>
+            <td>{{cgst}}</td>
+            <td>{{net}}</td>
+          </tr>
+        {{/each}}
+        <tr class="bold">
+          <td>Total</td>
+          <td>{{taxTotal.totalTax}}</td>
+          <td>{{taxTotal.totalSGST}}</td>
+          <td>{{taxTotal.totalCGST}}</td>
+          <td>{{taxTotal.totalNet}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="line"></div>
+
+    <table class="payment-table">
+      <tr>
+        <td>Payment Method:</td>
+        <td class="right">{{payment.method}}</td>
+      </tr>
+      <tr class="bold">
+        <td>Amount Paid:</td>
+        <td class="right">₹{{payment.amount}}</td>
+      </tr>
+    </table>
+
+    <div class="line"></div>
+
+    <table class="summary-table">
+      <tr><td>Savings on this Invoice:</td><td
+          class="right"
+        >₹{{summary.savings}}</td></tr>
+      <tr><td>Savings %:</td><td
+          class="right"
+        >{{summary.savingsPercentage}}%</td></tr>
+      <tr><td>Gross Value:</td><td class="right">₹{{summary.gross}}</td></tr>
+      <tr><td>Promo Discount:</td><td
+          class="right"
+        >₹{{summary.promoDiscount}}</td></tr>
+      <tr><td>Taxes:</td><td class="right">₹{{taxTotal.totalTax}}</td></tr>
+      <tr><td>Net Value:</td><td class="right bold">₹{{summary.net}}</td></tr>
+      <tr><td>Round Off:</td><td class="right">₹{{summary.roundOff}}</td></tr>
+      <tr><td>Received:</td><td class="right">₹{{summary.received}}</td></tr>
+      <tr><td>Balance:</td><td class="right">₹{{summary.balance}}</td></tr>
+    </table>
+
+    <div class="line"></div>
+
+    <div class="footer">
+      <div>For queries & complaints WhatsApp {{company.phone}}</div>
+      <div class="barcode" style="max-width: 70mm; margin: 0 auto;">
+        <img src="{{invoice.barcodeUrl}}" alt="Barcode" />
+        <div>{{invoice.barcodeText}}</div>
+      </div>
+      <div>Printed on {{invoice.printedAt}}</div>
+    </div>
+
+  </body>
+</html>

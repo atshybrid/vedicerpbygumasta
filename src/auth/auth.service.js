@@ -30,11 +30,17 @@ module.exports = {
           "role_id",
           "branch_id",
           "company_id",
+          "status",
         ],
       });
 
       if (!user) {
         return sendServiceMessage("messages.apis.auth.signIn.user_not_found");
+      }
+
+      // Check if user is active
+      if (user.status === "inactive") {
+        return sendServiceMessage("messages.apis.auth.signIn.user_inactive");
       }
 
       return sendServiceData({
@@ -66,6 +72,7 @@ module.exports = {
           "role_id",
           "branch_id",
           "company_id",
+          "status",
         ],
         include: [
           {
@@ -88,6 +95,11 @@ module.exports = {
 
       if (!user) {
         return sendServiceMessage("messages.apis.auth.signIn.user_not_found");
+      }
+
+      // Check if user is active
+      if (user.status === "inactive") {
+        return sendServiceMessage("messages.apis.auth.signIn.user_inactive");
       }
 
       if (!user.mpin) {

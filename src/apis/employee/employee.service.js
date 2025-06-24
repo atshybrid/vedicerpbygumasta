@@ -181,7 +181,7 @@ module.exports = {
       const { role, branch_id } = query;
 
       // Initialize filter for nested user
-      const userFilter = {};
+      const userFilter = { status: "active" }; // Only get active users
 
       // If role is provided, get role_id and filter
       if (role) {
@@ -201,6 +201,7 @@ module.exports = {
 
       // Fetch employees with filters
       const employees = await Employee.findAll({
+        where: { status: "active" }, // Only get active employees
         include: [
           {
             model: User,
@@ -212,6 +213,7 @@ module.exports = {
               "mobile_number",
               "role_id",
               "branch_id",
+              "status",
             ],
             include: [
               {
@@ -220,10 +222,10 @@ module.exports = {
                 attributes: ["role_id", "role_name"],
               },
             ],
-            where: Object.keys(userFilter).length > 0 ? userFilter : undefined,
+            where: userFilter,
           },
         ],
-        attributes: ["employee_id", "employee_no", "user_id"],
+        attributes: ["employee_id", "employee_no", "user_id", "status"],
       });
 
       return sendServiceData(employees);
@@ -235,8 +237,12 @@ module.exports = {
 
   getEmployee: async ({ params }) => {
     try {
-      // Retrieve a single employee by ID
-      const employee = await Employee.findByPk(params.employee_id, {
+      // Retrieve a single employee by ID (only if active)
+      const employee = await Employee.findOne({
+        where: {
+          employee_id: params.employee_id,
+          status: "active", // Only get active employees
+        },
         include: [
           {
             model: User,
@@ -248,10 +254,12 @@ module.exports = {
               "mobile_number",
               "role_id",
               "branch_id",
+              "status",
             ],
+            where: { status: "active" }, // Only get active users
           },
         ],
-        attributes: ["employee_id", "employee_no", "user_id"],
+        attributes: ["employee_id", "employee_no", "user_id", "status"],
       });
 
       if (!employee) {
@@ -830,16 +838,30 @@ module.exports = {
 
   deleteEmployee: async ({ params }) => {
     try {
-      // Find the employee
-      const employee = await Employee.findByPk(params.employee_id);
+      // Find the employee with user details
+      const employee = await Employee.findByPk(params.employee_id, {
+        include: [
+          {
+            model: User,
+            as: "user",
+            attributes: ["user_id", "status"],
+          },
+        ],
+      });
+
       if (!employee) {
         return sendServiceMessage(
           "messages.apis.app.employee.delete.not_found"
         );
       }
 
-      // Delete the employee
-      await employee.destroy();
+      // Set employee status to inactive instead of deleting
+      await employee.update({ status: "inactive" });
+
+      // Also set the associated user status to inactive
+      if (employee.user) {
+        await employee.user.update({ status: "inactive" });
+      }
 
       return sendServiceMessage("messages.apis.app.employee.delete.success");
     } catch (error) {

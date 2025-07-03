@@ -1,1082 +1,199 @@
 {
 	"messages": {
 		"apis": {
-			"auth": {
-				"common": {
-					"user_not_found": "The provided mobile number is not registered.",
-					"user_already_registered": "A user with this mobile number is already registered.",
-					"invalid_mpin": "The entered MPIN is incorrect. Please try again.",
-					"invalid_body": "Invalid request. Please check the input data.",
-					"error": "An error occurred. Please try again later.",
-					"invalid_phone": "messages.apis.auth.common.invalid_phone",
-					"not_admin": "This action is only allowed for admin users.",
-					"not_admin_or_manager": "This action is only allowed for admin or manager users.",
-					"not_admin_or_manager_or_biller": "This action is only allowed for admin, manager, or biller users.",
-					"not_manager": "This action is only allowed for manager users.",
-					"not_manager_or_biller": "This action is only allowed for manager or biller users.",
-					"not_biller": "This action is only allowed for biller users."
-				},
-				"request_otp": {
-					"success": "OTP has been sent successfully to your mobile number.",
-					"error": "Failed to send OTP. Please try again later.",
-					"user_not_found": "The provided mobile number is not registered."
-				},
-				"login": {
-					"success": "Login successful! Welcome back.",
-					"error": "Login failed. Please check your credentials and try again."
-				},
-				"verify_otp": {
-					"success": "OTP verified successfully! Proceeding with login or reset MPIN.",
-					"error": "Failed to verify OTP. Please ensure it is correct and try again.",
-					"otp_expired": "The OTP has expired. Please request a new one.",
-					"incorrect_otp": "Incorrect OTP. Please try again.",
-					"invalid_body": "Invalid Body. Please check request body."
-				},
-				"resend_otp": {
-					"success": "OTP Resend successfull!",
-					"error": "Failed to resend OTP.",
-					"otp_expired": "The OTP has expired. Please request a new one.",
-					"incorrect_otp": "Incorrect OTP. Please try again.",
-					"invalid_body": "Invalid Body. Please check request body."
-				},
-				"reset_mpin": {
-					"success": "MPIN reset successfully.",
-					"error": "An error occurred while resetting the MPIN. Please try again later.",
-					"invalid_body": "Invalid input. Please provide a valid phone number and a 6-digit MPIN.",
-					"unverified_otp": "OTP for this phone number is not verified.",
-					"otp_expired": "The OTP has expired. Please request a new one."
-				},
-				"signIn": {
-					"success": "You have successfully signed in.",
-					"error": "Error during sign-in. Please try again.",
-					"user_not_found": "User not found with the provided mobile number.",
-					"invalid_mpin": "Invalid MPIN. Please try again.",
-					"invalid_body": "Request Body Invalid"
-				},
-				"sendOTP": {
-					"success": "messages.apis.auth.sendOTP.success"
-				}
-			},
-			"admin": {},
 			"app": {
-				"bankaccount": {
-					"create": {
-						"success": "Bank account created successfully",
-						"error": "Error creating bankaccount"
-					},
-					"read": {
-						"success": "Bank account fetched successfully",
-						"error": "Error fetching bankaccount"
-					},
-					"update": {
-						"success": "Bank account updated successfully",
-						"error": "Error updating bankaccount"
-					},
-					"delete": {
-						"success": "Bank account deleted successfully",
-						"error": "Error deleting bankaccount"
-					},
-					"list": {
-						"success": "Bank accounts fetched successfully",
-						"error": "Error fetching bankaccounts"
-					}
-				},
 				"branch": {
-					"create": {
-						"success": "Branch created successfully",
-						"error": "Error creating branch",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"invalid_company": "Company Not Found",
-						"invalid_manager": "Manager Not Found",
-						"branch_exists": "Branch name already exists. Please provide a unique branch name.",
-						"invalid_branch": "Branch Not Found"
-					},
-					"read": {
-						"success": "Branch fetched successfully",
-						"error": "Error fetching branch",
-						"not_found": "Branch not found with the provided id.",
-						"by_manager_error": "Error Fetching Branches By Manager",
-						"by_company_error": "Error Fetching Branches By Company"
-					},
-					"update": {
-						"success": "Branch updated successfully",
-						"invalid_company": "Company Not Found",
-						"invalid_manager": "Manager Not Found",
-						"error": "Error updating branch",
-						"not_found": "Branch not found with the provided id."
-					},
-					"delete": {
-						"success": "Branch deleted successfully",
-						"error": "Error deleting branch"
-					},
-					"list": {
-						"success": "Branches fetched successfully",
-						"error": "Error fetching branches",
-						"error ": "Error Listing Branches"
-					},
-					"cashTransfer": {
-						"invalid_body": "Invalid cash transfer request body.",
-						"invalid_branch": "The specified branch is invalid.",
-						"invalid_company": "The specified company is invalid.",
-						"cash_account_missing": "Cash account not found for the specified branch.",
-						"insufficient_funds": "Insufficient funds in branch cash account to initiate the transfer or the pending cash transfer request exceed the requested amount.",
-						"create_error": "Failed to create cash transfer request. Please try again later.",
-						"success": "Cash transfer request created successfully.",
-						"update": "Cash transfer request updated successfully.",
-						"create": {
-							"success": "Cash transfer request created successfully."
-						},
-						"list": {
-							"success": "Cash transfer requests fetched successfully.",
-							"error": "Error fetching cash transfer requests."
-						},
-						"invalid_transfer": "No valid pending transfer found with the given ID",
-						"remarks_required_on_reject": "Remarks are mandatory while rejecting a transfer",
-						"approval_error": "Failed to process the transfer approval",
-						"invalid_accounts": "Invalid branch or company account found for processing"
-					},
-					"financial_transactions": {
-						"success": "Analytics fetched successfully",
-						"error": "Analytics fetching failed",
-						"error ": "messages.apis.app.branch.financial_transactions.error "
-					},
 					"expenses": {
-						"create": {
-							"invalid_body": "Invalid request. Please provide all required details: branch_id, amount, transaction_date, type, recorded_by.",
-							"invalid_amount": "Expense amount must be greater than zero.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_employee": "The specified employee does not exist or is unauthorized.",
-							"insufficient_funds": "Insufficient balance in the branch's petty cash account.",
-							"error": "An error occurred while recording the expense.",
-							"success": "Expense recorded successfully."
-						},
-						"update_status": {
-							"invalid_body": "Invalid request. Please provide all required details: expense_id, approved_by, and status.",
-							"invalid_expense": "The specified expense does not exist.",
-							"already_processed": "This expense has already been processed.",
-							"no_petty_cash_account": "No petty cash account found for the branch.",
-							"insufficient_funds": "Insufficient balance in the branch's petty cash account.",
-							"invalid_status": "Invalid status. The expense status must be 'Approved' or 'Rejected'.",
-							"success_approved": "Expense has been approved successfully.",
-							"success_rejected": "Expense has been rejected successfully.",
-							"error": "An error occurred while processing the expense.",
-							"success": "messages.apis.app.branch.expenses.update_status.success"
-						},
 						"list": {
-							"invalid_query": "Invalid request. Please provide at least one filter parameter (branch_id, recorded_by, status, fromDate, toDate).",
-							"no_expenses": "No expenses found for the given criteria.",
-							"success": "Expenses fetched successfully.",
-							"error": "An error occurred while fetching expenses.",
-							"error ": "Error Listing Expenses"
+							"no_expenses": "messages.apis.app.branch.expenses.list.no_expenses",
+							"success": "messages.apis.app.branch.expenses.list.success"
 						},
-						"read": {
-							"success": "Expense fetched successfully",
-							"error": "Error fetching expense",
-							"not_found": "Expense not found with the provided id."
+						"create": {
+							"success": "messages.apis.app.branch.expenses.create.success",
+							"invalid_body": "messages.apis.app.branch.expenses.create.invalid_body"
+						},
+						"get_balance": {
+							"success": "messages.apis.app.branch.expenses.get_balance.success",
+							"invalid_branch": "messages.apis.app.branch.expenses.get_balance.invalid_branch"
 						},
 						"add_balance": {
-							"invalid_body": "Invalid request. Please provide all required details: branch_id, company_id, company_bank_id, amount, admin_id.",
-							"invalid_amount": "Amount must be greater than zero.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_company": "The specified company does not exist.",
-							"invalid_bank_account": "The specified bank account does not exist or is not linked to the company.",
-							"insufficient_funds": "Insufficient balance in the company bank account to transfer to petty cash.",
-							"no_account": "No petty cash account found for the branch.",
-							"bank_deduction_failed": "Failed to deduct the amount from the company bank account.",
-							"petty_cash_update_failed": "Failed to update the petty cash account balance.",
-							"financial_transaction_error": "An error occurred while recording the financial transaction.",
-							"error": "An error occurred while adding balance to the petty cash account.",
-							"success": "Balance added successfully to the petty cash account.",
-							"transaction_success": "Balance transferred successfully from company bank account to branch petty cash.",
-							"transaction_reference": "Transaction reference number."
+							"success": "messages.apis.app.branch.expenses.add_balance.success"
 						},
-						"get_balance": {
-							"invalid_body": "Invalid request. Please provide all required details: branch_id, company_id.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_company": "The specified company does not exist.",
-							"no_account": "No petty cash account found for the branch.",
-							"error": "An error occurred while fetching the petty cash account balance.",
-							"success": "Petty cash account balance fetched successfully."
-						},
-						"cash_account": {
-							"success": "messages.apis.app.branch.expenses.cash_account.success"
+						"update_status": {
+							"success_approved": "messages.apis.app.branch.expenses.update_status.success_approved",
+							"invalid_body": "messages.apis.app.branch.expenses.update_status.invalid_body",
+							"success_rejected": "messages.apis.app.branch.expenses.update_status.success_rejected",
+							"already_processed": "messages.apis.app.branch.expenses.update_status.already_processed"
 						}
 					},
-					"pettycash": {
-						"get_balance": {
-							"success": "messages.apis.app.branch.pettycash.get_balance.success"
-						}
+					"list": {
+						"success": "messages.apis.app.branch.list.success"
+					},
+					"cashTransfer": {
+						"list": {
+							"success": "messages.apis.app.branch.cashTransfer.list.success"
+						},
+						"update": "messages.apis.app.branch.cashTransfer.update",
+						"invalid_transfer": "messages.apis.app.branch.cashTransfer.invalid_transfer"
 					},
 					"cash_account": {
 						"get_balance": {
-							"success": "Branch Cash Account Balance Fetched Successfully",
-							"error": "Error Fetching Branch Cash Account Balance"
+							"success": "messages.apis.app.branch.cash_account.get_balance.success"
+						}
+					}
+				},
+				"sale": {
+					"read": {
+						"success": "messages.apis.app.sale.read.success"
+					},
+					"handover": {
+						"read": {
+							"invalid_branch": "messages.apis.app.sale.handover.read.invalid_branch",
+							"success": "messages.apis.app.sale.handover.read.success"
 						},
-						"success": "messages.apis.app.branch.cash_account.success"
-					}
-				},
-				"branchitem": {
-					"create": {
-						"success": "Branch item created successfully",
-						"error": "Error creating branch item"
-					},
-					"read": {
-						"success": "Branch item fetched successfully",
-						"error": "Error fetching branch item"
-					},
-					"update": {
-						"success": "Branch item updated successfully",
-						"error": "Error updating branch item"
-					},
-					"delete": {
-						"success": "Branch item deleted successfully",
-						"error": "Error deleting branch item"
+						"approve": {
+							"remarks_required": "messages.apis.app.sale.handover.approve.remarks_required",
+							"wrong_manager": "messages.apis.app.sale.handover.approve.wrong_manager",
+							"invalid_body": "messages.apis.app.sale.handover.approve.invalid_body",
+							"success": "messages.apis.app.sale.handover.approve.success"
+						},
+						"create": {
+							"success": "messages.apis.app.sale.handover.create.success"
+						}
 					},
 					"list": {
-						"success": "Branch items fetched successfully",
-						"error": "Error fetching branch items"
+						"success": "messages.apis.app.sale.list.success"
+					},
+					"get": {
+						"no_sales": "messages.apis.app.sale.get.no_sales",
+						"error": "messages.apis.app.sale.get.error"
+					},
+					"return": {
+						"invalid_body": "messages.apis.app.sale.return.invalid_body",
+						"success": "messages.apis.app.sale.return.success"
+					},
+					"cashTotal": {
+						"error": "messages.apis.app.sale.cashTotal.error"
+					},
+					"create": {
+						"success": "messages.apis.app.sale.create.success"
 					}
 				},
-				"cashaccount": {
-					"create": {
-						"success": "Cash account created successfully",
-						"error": "Error creating cashaccount"
-					},
-					"read": {
-						"success": "Cash account fetched successfully",
-						"error": "Error fetching cashaccount"
-					},
-					"update": {
-						"success": "Cash account updated successfully",
-						"error": "Error updating cashaccount"
-					},
-					"delete": {
-						"success": "Cash account deleted successfully",
-						"error": "Error deleting cashaccount"
-					},
-					"list": {
-						"success": "Cash accounts fetched successfully",
-						"error": "Error fetching cashaccounts"
+				"saleReturn": {
+					"get": {
+						"no_returns": "messages.apis.app.saleReturn.get.no_returns",
+						"error": "messages.apis.app.saleReturn.get.error"
 					}
 				},
-				"category": {
-					"create": {
-						"success": "Category created successfully",
-						"error": "Error creating category",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"duplicate_category": "Category with this name already exists. Please provide a unique category name."
+				"employee": {
+					"analytics": {
+						"success": "messages.apis.app.employee.analytics.success"
 					},
-					"read": {
-						"success": "Category fetched successfully",
-						"error": "Error fetching category"
-					},
-					"update": {
-						"success": "Category updated successfully",
-						"error": "Error updating category"
-					},
-					"delete": {
-						"success": "Category deleted successfully",
-						"error": "Error deleting category"
+					"checkInStatus": {
+						"success": "messages.apis.app.employee.checkInStatus.success"
 					},
 					"list": {
-						"success": "Categories fetched successfully",
-						"error": "Error fetching categories"
+						"success": "messages.apis.app.employee.list.success"
+					},
+					"attendance": {
+						"get": {
+							"no_records": "messages.apis.app.employee.attendance.get.no_records",
+							"success": "messages.apis.app.employee.attendance.get.success"
+						}
+					},
+					"checkIn": {
+						"success": "messages.apis.app.employee.checkIn.success",
+						"pending_handover_exists": "messages.apis.app.employee.checkIn.pending_handover_exists"
+					},
+					"checkOut": {
+						"success": "messages.apis.app.employee.checkOut.success"
 					}
 				},
 				"company": {
-					"create": {
-						"success": "Company created successfully",
-						"error": "Error creating company",
-						"duplicate_company_name": "A company with this name already exists. Please choose a different name.",
-						"duplicate_gst_number": "A company with this GST number already exists. Please check the GST number.",
-						"duplicate_phone_number": "A company with this phone number already exists. Please provide a unique phone number.",
-						"invalid_body": "Invalid Body Recieved. Please check the request body."
+					"banner": {
+						"list": {
+							"success": "messages.apis.app.company.banner.list.success"
+						}
 					},
 					"read": {
-						"success": "Company fetched successfully",
-						"error": "Error fetching company",
-						"invalid_id": "Company Id Missing In Params",
-						"not_found": "Company not found with the provided id."
+						"not_found": "messages.apis.app.company.read.not_found"
+					}
+				},
+				"stock": {
+					"read": {
+						"success": "messages.apis.app.stock.read.success"
 					},
-					"update": {
-						"success": "Company updated successfully",
-						"invalid_id": "Company Id Missing In Params",
-						"not_found": "Company not found with the provided id.",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"error": "Error updating company"
-					},
-					"delete": {
-						"success": "Company deleted successfully",
-						"error": "Error deleting company",
-						"not_found": "Company not found with the provided id."
-					},
-					"list": {
-						"success": "Companies fetched successfully",
-						"error": "Error fetching companies",
-						"error ": "Error Listing Companies"
-					},
-					"bank_account": {
-						"create": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_company": "The specified company does not exist.",
-							"duplicate_account_number": "The account number  already exists.",
-							"error": "An error occurred while creating the bank account. Please try again later.",
-							"success": "Bank account created successfully."
-						},
-						"update": {
-							"invalid_id": "Bank account ID is required.",
-							"invalid_body": "Invalid request body. Please provide at least one field to update.",
-							"not_found": "The specified bank account was not found.",
-							"duplicate_account_number": "The account number is already associated with another bank account.",
-							"error": "An error occurred while updating the bank account. Please try again later.",
-							"success": "Bank account updated successfully."
-						}
-					},
-					"expenses": {
-						"create": {
-							"invalid_body": "Invalid request. Please provide all required details: company_id, bank_account_id, amount, transaction_date, type, recorded_by.",
-							"invalid_amount": "Expense amount must be greater than zero.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_employee": "The specified employee does not exist or is unauthorized.",
-							"insufficient_funds": "Insufficient balance in the branch's petty cash account.",
-							"error": "An error occurred while recording the expense.",
-							"success": "Expense recorded successfully."
-						},
-						"update_status": {
-							"invalid_body": "Invalid request. Please provide all required details: expense_id, approved_by, and status.",
-							"invalid_expense": "The specified expense does not exist.",
-							"already_processed": "This expense has already been processed.",
-							"no_petty_cash_account": "No petty cash account found for the branch.",
-							"insufficient_funds": "Insufficient balance in the branch's petty cash account.",
-							"invalid_status": "Invalid status. The expense status must be 'Approved' or 'Rejected'.",
-							"success_approved": "Expense has been approved successfully.",
-							"success_rejected": "Expense has been rejected successfully.",
-							"error": "An error occurred while processing the expense.",
-							"success": "Expense Updated Successfully"
-						},
-						"list": {
-							"invalid_query": "Invalid request. Please provide at least one filter parameter (branch_id, recorded_by, status, fromDate, toDate).",
-							"no_expenses": "No expenses found for the given criteria.",
-							"success": "Expenses fetched successfully.",
-							"error": "An error occurred while fetching expenses.",
-							"error ": "Error Listing Expenses"
-						},
-						"read": {
-							"success": "Expense fetched successfully",
-							"error": "Error fetching expense",
-							"not_found": "Expense not found with the provided id."
-						},
-						"add_balance": {
-							"invalid_body": "Invalid request. Please provide all required details: branch_id, amount, transaction_date, recorded_by.",
-							"invalid_amount": "Amount must be greater than zero.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_employee": "The specified employee does not exist or is unauthorized.",
-							"no_account": "No petty cash account found for the branch.",
-							"error": "An error occurred while adding balance to the petty cash account.",
-							"success": "Balance added successfully."
-						}
-					},
-					"expense": {
-						"create": {
-							"success": "messages.apis.app.company.expense.create.success"
-						}
-					},
-					"banner": {
-						"create": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"success": "Banner created successfully.",
-							"error": "Error creating banner"
-						},
-						"update": {
-							"not_found": "Banner not found for update.",
-							"success": "Banner updated successfully.",
-							"error": "Error updating banner",
-							"invalid_body": "messages.apis.app.company.banner.update.invalid_body"
-						},
-						"delete": {
-							"not_found": "Banner not found for deletion.",
-							"success": "Banner deleted successfully.",
-							"error": "Error deleting banner"
-						},
+					"transfer": {
 						"get": {
-							"not_found": "Banner not found.",
-							"success": "Banner fetched successfully.",
-							"error": "Error fetching banner"
+							"invalid_query": "messages.apis.app.stock.transfer.get.invalid_query",
+							"success": "messages.apis.app.stock.transfer.get.success"
 						},
-						"list": {
-							"success": "Banners fetched successfully.",
-							"error": "Error fetching banners"
+						"acknowledge": {
+							"success": "messages.apis.app.stock.transfer.acknowledge.success",
+							"invalid_batch": "messages.apis.app.stock.transfer.acknowledge.invalid_batch"
 						},
+						"invalid_item_details": "messages.apis.app.stock.transfer.invalid_item_details",
+						"success": "messages.apis.app.stock.transfer.success",
+						"error": "messages.apis.app.stock.transfer.error",
+						"invalid_body": "messages.apis.app.stock.transfer.invalid_body"
+					},
+					"request": {
 						"read": {
-							"success": "Banner fetched successfully",
-							"error": "Error fetching banner"
+							"success": "messages.apis.app.stock.request.read.success"
+						},
+						"update": {
+							"success": "messages.apis.app.stock.request.update.success",
+							"invalid_body": "messages.apis.app.stock.request.update.invalid_body"
+						},
+						"create": {
+							"success": "messages.apis.app.stock.request.create.success"
+						}
+					},
+					"branchItem": {
+						"get": {
+							"branch_not_found": "messages.apis.app.stock.branchItem.get.branch_not_found"
 						}
 					}
 				},
 				"customer": {
-					"create": {
-						"success": "Customer created successfully",
-						"invalid_body": "Invalid input. Please provide all required fields.",
-						"gst_error": "GST No Required For This Customer Type",
-						"gst_not_allowed": "GST No Not Allowed For This Customer Type",
-						"duplicate": "Customer Already Exists",
-						"error": "Error creating customer"
-					},
-					"gst": {
-						"invalid_gstin": "Invalid GSTIN number. Please provide a valid GSTIN.",
-						"no_data": "No GST details found for the provided GSTIN.",
-						"error": "An error occurred while fetching GST details. Please try again later.",
-						"success": "GST details retrieved successfully."
-					},
-					"read": {
-						"success": "Customer fetched successfully",
-						"not_found": "Customer not found with the provided id.",
-						"error": "Error fetching customer"
-					},
-					"update": {
-						"success": "Customer updated successfully",
-						"error": "Error updating customer"
-					},
-					"delete": {
-						"success": "Customer deleted successfully",
-						"error": "Error deleting customer"
-					},
 					"list": {
-						"success": "Customers fetched successfully",
-						"error": "Error fetching customers"
-					}
-				},
-				"employee": {
-					"create": {
-						"invalid_body": "Invalid input. Please provide all required fields.",
-						"invalid_role": "The specified role does not exist.",
-						"admin_role_error": "Admin role cannot be created here. Please use user servide directly",
-						"invalid_branch": "The specified branch does not exist.",
-						"invalid_company": "The specified company does not exist.",
-						"user_creation_failed": "Failed to create a user for the employee.",
-						"success": "Employee created successfully.",
-						"error": "An error occurred while creating the employee. Please try again later.",
-						"duplicate_employee_no": "Employee number already exists. Please provide a unique employee number."
-					},
-					"read": {
-						"success": "Employee fetched successfully",
-						"not_found": "Employee not found with the provided id.",
-						"error": "Error fetching employee"
-					},
-					"update": {
-						"invalid_body": "Invalid or empty request body. Please provide valid fields to update.",
-						"not_found": "Employee not found with the specified ID.",
-						"invalid_role": "The specified role does not exist.",
-						"invalid_branch": "The specified branch does not exist.",
-						"invalid_company": "The specified company does not exist.",
-						"admin_role_error": "Employees cannot be assigned the 'ADMIN' role.",
-						"user_update_failed": "Failed to update the associated user details.",
-						"success": "Employee updated successfully.",
-						"error": "An error occurred while updating the employee. Please try again later.",
-						"duplicate_employee_no": "Employee number already exists. Please provide a unique employee number."
-					},
-					"delete": {
-						"success": "Employee deleted successfully",
-						"error": "Error deleting employee"
-					},
-					"list": {
-						"success": "Employees fetched successfully",
-						"error": "Error fetching employees"
-					},
-					"checkIn": {
-						"invalid_body": "Biller ID, branch ID, company ID, opening balance, and timestamp are required.",
-						"invalid_opening_balance": "Opening balance cannot be negative.",
-						"invalid_branch": "Invalid branch ID.",
-						"invalid_biller": "Invalid biller ID.",
-						"pending_handover_exists": "A pending or rejected handover request exists for this biller. Kindly get it approved before checking in.",
-						"already_checked_in": "The biller has already checked in for today.",
-						"success": "Check-in successful.",
-						"error": "An error occurred during check-in. Please try again later."
-					},
-					"checkOut": {
-						"invalid_body": "Invalid request body. Please provide all required fields.",
-						"invalid_closing_balance": "Closing balance must be a non-negative value.",
-						"invalid_branch": "The specified branch does not exist or does not match the company.",
-						"invalid_biller": "The specified biller does not exist or does not belong to this branch.",
-						"no_open_register_for_today": "There is no open register for the specified biller for today to check out.",
-						"no_open_handover_for_today": "There is no open handover for the specified biller for today. Create a handover request first.",
-						"already_checked_out": "The biller has already checked out for today.",
-						"success": "Check-out successful.",
-						"error": "An error occurred during check-out. Please try again later."
-					},
-					"checkInStatus": {
-						"invalid_body": "Invalid request body. Please provide all required fields.",
-						"invalid_branch": "The specified branch does not exist or does not match the company.",
-						"invalid_biller": "The specified biller does not exist or does not belong to this branch.",
-						"no_open_register_for_today": "There is no open register for the specified biller for today.",
-						"success": "Check-in status fetched successfully.",
-						"error": "An error occurred while fetching check-in status.",
-						"error ": "Error Fetching Checkin Status"
-					},
-					"checkin": {
-						"success": "messages.apis.app.employee.checkin.success"
-					},
-					"checkout": {
-						"success": "messages.apis.app.employee.checkout.success"
-					},
-					"attendance": {
-						"invalid_body": "Invalid input. Please provide all required details.",
-						"invalid_date": "Attendance can only be marked for today.",
-						"invalid_manager": "Invalid manager or manager is not associated with the branch.",
-						"invalid_branch": "Invalid branch or branch is not associated with the company.",
-						"invalid_company": "Invalid company.",
-						"invalid_entry": "Invalid attendance entry. Employee ID, live image, and attendance status are required.",
-						"invalid_employee": "Invalid employee or employee does not belong to this branch.",
-						"already_marked": "Attendance has already been marked for this employee today.",
-						"error": "An error occurred while marking attendance. Please try again.",
-						"success": "Attendance marked successfully.",
-						"get": {
-							"success": "Attendance records fetched successfully",
-							"no_records": "No attendance records found for the given filters.",
-							"error": "An error occurred while fetching attendance records."
-						}
-					},
-					"analytics": {
-						"success": "Analytics fetched successfully",
-						"error": "Analytics fetching failed",
-						"invalid_employee": "The specified employee does not exist or is unauthorized.",
-						"invalid_body": "messages.apis.app.employee.analytics.invalid_body"
-					}
-				},
-				"transaction": {
-					"create": {
-						"success": "Financial transaction created successfully",
-						"error": "Error creating financial transaction"
-					},
-					"read": {
-						"success": "Financial transaction fetched successfully",
-						"error": "Error fetching financial transaction"
-					},
-					"update": {
-						"success": "Financial transaction updated successfully",
-						"error": "Error updating financial transaction"
-					},
-					"delete": {
-						"success": "Financial transaction deleted successfully",
-						"error": "Error deleting financial transaction"
-					},
-					"list": {
-						"success": "Financial transactions fetched successfully",
-						"error": "Error fetching financial transactions"
-					}
-				},
-				"gst": {
-					"create": {
-						"success": "Gst created successfully",
-						"error": "Error creating gst",
-						"exists": "Gst with this name/rate already exists. Please provide a unique gst name.",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"invalid_rate_sum": "GST Sum Not Matching",
-						"conflicting_rates": "Conflicting GST Rates"
-					},
-					"read": {
-						"success": "Gst fetched successfully",
-						"error": "Error fetching gst"
-					},
-					"update": {
-						"success": "Gst updated successfully",
-						"error": "Error updating gst"
-					},
-					"delete": {
-						"success": "Gst deleted successfully",
-						"error": "Error deleting gst"
-					},
-					"list": {
-						"success": "Gsts fetched successfully",
-						"error": "Error fetching gsts"
-					}
-				},
-				"variation": {
-					"create": {
-						"success": "Item variation created successfully",
-						"error": "Error creating item variation",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"duplicate_variation": "Item variation with this name already exists. Please provide a unique item variation name.",
-						"invalid_item": "Item Id Not Found",
-						"duplicate_barcode": "Item variation with this barcode already exists. Please provide a unique barcode.",
-						"duplicate_sku": "Item variation with this sku already exists. Please provide a unique sku."
-					},
-					"read": {
-						"success": "Item variation fetched successfully",
-						"error": "Error fetching item variation",
-						"not_found": "Item variation not found with the provided id."
-					},
-					"update": {
-						"success": "Item variation updated successfully",
-						"error": "Error updating item variation"
-					},
-					"delete": {
-						"success": "Item variation deleted successfully",
-						"error": "Error deleting item variation"
-					},
-					"list": {
-						"success": "Item variations fetched successfully",
-						"error": "Error fetching item variations"
-					},
-					"search": {
-						"error": "messages.apis.app.variation.search.error"
-					}
-				},
-				"item": {
-					"create": {
-						"success": "Item created successfully",
-						"error": "Error creating item",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"invalid_gst": "GST Not Found",
-						"invalid_category": "Category Not Found",
-						"invalid_uom": "UOM Not Found",
-						"duplicate_item_name": "Item with this name already exists. Please provide a unique item name."
-					},
-					"read": {
-						"success": "Item fetched successfully",
-						"error": "Error fetching item",
-						"not_found": "Item not found with the provided search key.",
-						"id_not_found": "Item not found with the provided id."
-					},
-					"update": {
-						"success": "Item updated successfully",
-						"error": "Error updating item"
-					},
-					"delete": {
-						"success": "Item deleted successfully",
-						"error": "Error deleting item"
-					},
-					"list": {
-						"success": "Items fetched successfully",
-						"error": "Error fetching items"
-					},
-					"search": {
-						"error": "messages.apis.app.item.search.error",
-						"success": "messages.apis.app.item.search.success"
-					}
-				},
-				"return": {
-					"create": {
-						"success": "Return created successfully",
-						"error": "Error creating return"
-					},
-					"read": {
-						"success": "Return fetched successfully",
-						"error": "Error fetching return"
-					},
-					"update": {
-						"success": "Return updated successfully",
-						"error": "Error updating return"
-					},
-					"delete": {
-						"success": "Return deleted successfully",
-						"error": "Error deleting return"
-					},
-					"list": {
-						"success": "Returns fetched successfully",
-						"error": "Error fetching returns"
+						"success": "messages.apis.app.customer.list.success"
 					}
 				},
 				"role": {
-					"create": {
-						"success": "Role created successfully",
-						"error": "Error creating role",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"duplicate_role": "Duplicate Role Name Recieved. Please provide a unique role name."
-					},
+					"list": {
+						"success": "messages.apis.app.role.list.success"
+					}
+				},
+				"companybankaccount": {
 					"read": {
-						"success": "Role fetched successfully",
-						"error": "Error fetching role"
-					},
-					"update": {
-						"success": "Role updated successfully",
-						"error": "Error updating role",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"not_found": "Role not found with the provided id.",
-						"duplicate_role": "messages.apis.app.role.update.duplicate_role"
-					},
-					"delete": {
-						"success": "Role deleted successfully",
-						"error": "Error deleting role",
-						"not_found": "Role not found with the provided id."
+						"invalid_company": "messages.apis.app.companybankaccount.read.invalid_company"
 					},
 					"list": {
-						"success": "Roles fetched successfully",
-						"error": "Error fetching roles"
-					}
-				},
-				"sale": {
-					"create": {
-						"invalid_body": "Invalid request body. Please provide customer_id, branch_id, total_amount, items, and payment details.",
-						"invalid_branch": "The specified branch does not exist.",
-						"invalid_customer": "The specified customer does not exist.",
-						"invalid_employee": "The specified employee does not exist.",
-						"insufficient_stock": "Insufficient stock for one or more items in the branch.",
-						"invalid_total_amount": "The total amount does not match the calculated total from the items.",
-						"invalid_item_details": "One or more items have invalid rate, quantity, or GST details.",
-						"credit_limit_exceeded": "Customer credit limit exceeded.",
-						"invalid_cash_account": "No valid cash account found for the specified branch.",
-						"invalid_bank_account": "No valid bank account found for the specified branch.",
-						"insufficient_credit_limit": "Insufficient credit limit. The sale cannot be processed.",
-						"invalid_company_bank_account": "No valid bank account is linked to the company.",
-						"invalid_split": "Split Details Is Missing",
-						"split_items_missing": "Split Items Missing",
-						"split_amount_mismatch": "Split Amount Mismatch",
-						"invoice_number_error": "Error Generating Invoice Number.",
-						"insufficient_balance": "Insufficient balance in the customer's account.",
-						"success": "Sale created successfully.",
-						"error": "An error occurred while creating the sale. Please try again later."
-					},
-					"return": {
-						"invalid_body": "Invalid request body. Please provide all required fields.",
-						"invalid_branch": "The specified branch does not exist.",
-						"invalid_employee": "The specified employee does not exist.",
-						"invalid_sale": "The specified sale does not exist.",
-						"invalid_customer": "The specified customer does not exist.",
-						"invalid_item_details": "One or more items have invalid rate, quantity, or GST details.",
-						"invalid_item": "Items Not Valid",
-						"invalid_sale_item": "Sale Item Not Found",
-						"exceeds_available_quantity": "Return quantity exceeds available quantity.",
-						"b2c_month_mismatch": "B2C sales cannot be returned for a different month.",
-						"success": "Sale return created successfully.",
-						"error": "An error occurred while creating the sale return. Please try again later."
-					},
-					"read": {
-						"success": "Sale fetched successfully",
-						"error": "Error fetching sale"
-					},
-					"update": {
-						"success": "Sale updated successfully",
-						"error": "Error updating sale"
-					},
-					"delete": {
-						"success": "Sale deleted successfully",
-						"error": "Error deleting sale"
-					},
-					"list": {
-						"success": "Sales fetched successfully",
-						"error": "Error fetching sales"
-					},
-					"handover": {
-						"create": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_cash_amount": "Cash amount must be greater than zero.",
-							"invalid_branch": "Invalid branch. Please provide a valid branch ID.",
-							"invalid_biller": "Invalid biller. Please provide a valid biller ID.",
-							"invalid_manager": "Invalid manager. Please provide a valid manager ID.",
-							"no_register_for_today": "No open register found for today.",
-							"error": "An error occurred while creating the handover request.",
-							"success": "Handover request created successfully."
-						},
-						"approve": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_handover": "Invalid handover request. Please provide a valid handover ID.",
-							"remarks_required": "Remarks are required for approving the handover request.",
-							"not_pending": "The handover request is not in a 'PENDING' state.",
-							"invalid_manager": "Invalid manager. The manager does not belong to the branch.",
-							"wrong_manager": "This manager is not authorized to approve this handover request.",
-							"error": "An error occurred while approving the handover request.",
-							"success": "Handover request approved successfully.",
-							"rejected": "Handover request rejected successfully."
-						},
-						"get": {
-							"success": "Handover requests fetched successfully.",
-							"error": "An error occurred while retrieving handover requests.",
-							"invalid_params": "Invalid query parameters provided."
-						},
-						"read": {
-							"success": "Handover request fetched successfully.",
-							"invalid_branch": "Invalid branch. Please provide a valid branch ID.",
-							"error": "An error occurred while retrieving handover requests.",
-							"invalid_params": "Invalid query parameters provided."
-						}
-					},
-					"cashTotal": {
-						"invalid_branch": "The specified branch does not exist or does not match the company.",
-						"invalid_params": "Invalid parameters. Please provide branch_id and timestamp.",
-						"error": "An error occurred while fetching cash total details.",
-						"success": "Cash total details fetched successfully."
-					},
-					"read_all": {
-						"error": "messages.apis.app.sale.read_all.error"
-					},
-					"get": {
-						"success": "Sale details retrieved successfully.",
-						"invalid_sale_id": "The sale ID provided is invalid.",
-						"sale_not_found": "The sale with the specified ID was not found.",
-						"error": "An error occurred while retrieving the sale details.",
-						"invalid_query": "The query parameters are invalid. Please provide the required filters.",
-						"no_sales": "No sales records found for the specified filters."
-					}
-				},
-				"stock": {
-					"companyItem": {
-						"addStock": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_stock": "Stock must be a non-negative value.",
-							"invalid_mrp": "MRP must be a non-negative value.",
-							"invalid_discount": "Discount must be a non-negative value.",
-							"invalid_company": "The specified company does not exist.",
-							"invalid_variation": "The specified variation does not exist.",
-							"success": "Stock added/updated successfully.",
-							"error": "An error occurred while adding stock. Please try again later."
-						},
-						"get": {
-							"invalid_company": "Invalid company ID. Please provide a valid company ID.",
-							"no_items": "No items found for the specified company.",
-							"company_not_found": "Company not found with the provided ID.",
-							"error": "An error occurred while retrieving company items. Please try again later.",
-							"success": "Company items retrieved successfully."
-						}
-					},
-					"branchItem": {
-						"addStock": {
-							"invalid_body": "Invalid request body. Please provide all required fields: branch_id, variation_id, stock, transaction_type, and flow_type.",
-							"invalid_stock": "Stock must be a positive value.",
-							"insufficient_stock": "Insufficient stock available for the transaction.",
-							"stock_not_found": "Stock not found for the specified item variation.",
-							"invalid_branch": "The specified branch does not exist.",
-							"invalid_variation": "The specified item variation does not exist.",
-							"success": "Stock added/updated successfully for the branch.",
-							"error": "An error occurred while adding stock for the branch. Please try again later."
-						},
-						"get": {
-							"invalid_branch": "Invalid branch ID. Please provide a valid branch ID.",
-							"no_items": "No items found for the specified branch.",
-							"branch_not_found": "Branch not found with the provided ID.",
-							"error": "An error occurred while retrieving branch items. Please try again later.",
-							"success": "Branch items retrieved successfully.",
-							"invalid_query": "Invalid query parameters. Please provide barcode,stock or item name.",
-							"no_variation_found": "No Variations Found"
-						}
-					},
-					"transfer": {
-						"invalid_body": "Invalid request body. Please provide all required fields.",
-						"invalid_quantity": "Quantity must be a positive number.",
-						"invalid_variation": "The specified variation does not exist.",
-						"invalid_item_details": "One or more items have invalid rate, quantity, or GST details.",
-						"invalid_from_branch": "The source branch does not exist.",
-						"invalid_from_company": "The source company does not exist.",
-						"invalid_to_branch": "The destination branch does not exist.",
-						"insufficient_stock": "Insufficient stock available for the transfer.",
-						"error": "An error occurred while transferring stock. Please try again later.",
-						"success": "Stock transfer completed successfully.",
-						"acknowledge": {
-							"invalid_body": "Invalid request body. Please provide batch_id, items, and acknowledgeDate.",
-							"invalid_batch": "No pending stock transfers found for the given batch ID.",
-							"invalid_item_body": "Each item must include variation_id, received_quantity, and lost_quantity, and these must be valid numbers.",
-							"mismatched_quantity": "Received and lost quantities do not match the transferred quantity for one or more items.",
-							"missing_items": "The request does not include all items from the batch. Please acknowledge all items.",
-							"error": "An error occurred while acknowledging the stock transfer.",
-							"success": "Stock transfer acknowledged successfully."
-						},
-						"get": {
-							"invalid_query": "Please provide at least one filter: batch_id, company_id, or branch_id.",
-							"no_records": "No stock transfer records found for the given filters.",
-							"error": "An error occurred while fetching stock transfer records.",
-							"success": "Stock transfer records fetched successfully."
-						}
-					},
-					"request": {
-						"create": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_item_body": "Invalid item details. Please provide valid variation ID and stock requested.",
-							"invalid_stock_requested": "Stock requested must be greater than 0.",
-							"invalid_branch": "The specified branch does not exist or does not belong to the given company.",
-							"invalid_manager": "The specified manager is not valid for this branch.",
-							"invalid_variation": "The specified item variation does not exist.",
-							"error": "An error occurred while creating the stock requests. Please try again later.",
-							"success": "Stock requests created successfully."
-						},
-						"read": {
-							"error": "An error occurred while fetching stock requests. Please try again later.",
-							"success": "Stock requests fetched successfully.",
-							"invalid_query": "Invalid query parameters. Please provide branch_id and status."
-						},
-						"update": {
-							"invalid_body": "Invalid request body. Please provide all required fields.",
-							"invalid_request": "The specified stock request does not exist.",
-							"invalid_status": "Invalid status. The status must be 'PARTIALLY APPROVED' , 'APPROVED', 'REJECTED'.",
-							"not_found": "Stock request not found with the provided batch id.",
-							"error": "An error occurred while updating the stock request. Please try again later.",
-							"success": "Stock request updated successfully."
-						}
-					},
-					"register": {
-						"create_error": "Error creating stock register entry."
-					},
-					"create": {
-						"success": "Stock register created successfully",
-						"error": "Error creating stock register"
-					},
-					"read": {
-						"success": "Stock register fetched successfully",
-						"error": "Error fetching stock register"
-					},
-					"update": {
-						"success": "Stock register updated successfully",
-						"error": "Error updating stock register"
-					},
-					"delete": {
-						"success": "Stock register deleted successfully",
-						"error": "Error deleting stock register"
-					},
-					"list": {
-						"success": "Stock registers fetched successfully",
-						"error": "Error fetching stock registers"
-					}
-				},
-				"uom": {
-					"create": {
-						"success": "Uom created successfully",
-						"error": "Error creating uom",
-						"invalid_body": "Invalid Body. Please check request body.",
-						"duplicate_uom_name": "Uom with this name already exists. Please provide a unique uom name.",
-						"error ": "messages.apis.app.uom.create.error "
-					},
-					"read": {
-						"success": "Uom fetched successfully",
-						"error": "Error fetching uom"
-					},
-					"update": {
-						"success": "Uom updated successfully",
-						"error": "Error updating uom"
-					},
-					"delete": {
-						"success": "Uom deleted successfully",
-						"error": "Error deleting uom"
-					},
-					"list": {
-						"success": "Uoms fetched successfully",
-						"error": "Error fetching uoms"
-					}
-				},
-				"user": {
-					"create": {
-						"success": "User created successfully",
-						"error": "Error creating user",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"duplicate_mobile_number": "Mobile Number Already Exists",
-						"duplicate_email": "Email Already Exists",
-						"non_employee_error": "User is not an employee. Please create user through Employeee Service",
-						"invalid_branch": "Branch Not Found",
-						"invalid_company": "Company Not Found"
-					},
-					"read": {
-						"success": "User fetched successfully",
-						"error": "Error fetching user",
-						"not_found": "User not found with the provided id."
-					},
-					"update": {
-						"success": "User updated successfully",
-						"error": "Error updating user",
-						"not_found": "User not found with the provided id.",
-						"invalid_body": "Invalid Body Recieved. Please check the request body.",
-						"duplicate_mobile_number": "Mobile Number Already Exists",
-						"duplicate_email": "Email Already Exists",
-						"invalid_company": "Company Not Found"
-					},
-					"delete": {
-						"success": "User deleted successfully",
-						"error": "Error deleting user"
-					},
-					"list": {
-						"success": "Users fetched successfully",
-						"error": "Error fetching users"
-					},
-					"upload_image": {
-						"success": "User image uploaded successfully",
-						"error": "Error uploading user image",
-						"no_file_error": "No file found in request",
-						"missing_type_error": "No type found in request"
-					}
-				},
-				"vendor": {
-					"create": {
-						"success": "Vendor created successfully",
-						"error": "Error creating vendor"
-					},
-					"read": {
-						"success": "Vendor fetched successfully",
-						"error": "Error fetching vendor"
-					},
-					"update": {
-						"success": "Vendor updated successfully",
-						"error": "Error updating vendor"
-					},
-					"delete": {
-						"success": "Vendor deleted successfully",
-						"error": "Error deleting vendor"
-					},
-					"list": {
-						"success": "Vendors fetched successfully",
-						"error": "Error fetching vendors"
-					}
-				},
-				"otp": {
-					"generate": {
-						"error": "messages.apis.app.otp.generate.error"
-					},
-					"verify": {
-						"error": "messages.apis.app.otp.verify.error"
-					}
-				},
-				"branchItem": {
-					"get": {
-						"invalid_branch": "messages.apis.app.branchItem.get.invalid_branch",
-						"no_items": "messages.apis.app.branchItem.get.no_items"
-					}
-				},
-				"companyItem": {
-					"get": {
-						"company_not_found": "messages.apis.app.companyItem.get.company_not_found"
-					}
-				},
-				"stockRegister": {
-					"read": {
-						"not_found": "messages.apis.app.stockRegister.read.not_found"
-					},
-					"update": {
-						"not_found": "messages.apis.app.stockRegister.update.not_found"
-					}
-				},
-				"expenses": {
-					"update_status": {
-						"error": "messages.apis.app.expenses.update_status.error",
-						"already_processed": "messages.apis.app.expenses.update_status.already_processed"
-					}
-				},
-				"manager": {
-					"analytics": {
-						"error": "messages.apis.app.manager.analytics.error"
-					}
-				},
-				"analytics": {
-					"error": "messages.apis.app.analytics.error"
-				},
-				"saleReturn": {
-					"create_error": "messages.apis.app.saleReturn.create_error",
-					"exceeds_available_quantity": "messages.apis.app.saleReturn.exceeds_available_quantity",
-					"b2c_month_mismatch": "messages.apis.app.saleReturn.b2c_month_mismatch",
-					"get": {
-						"error": "messages.apis.app.saleReturn.get.error",
-						"return_not_found": "messages.apis.app.saleReturn.get.return_not_found"
+						"success": "messages.apis.app.companybankaccount.list.success"
 					}
 				}
 			},
-			"stock": {
-				"app": {
-					"branchItem": {
-						"get": {
-							"error": "messages.apis.stock.app.branchItem.get.error"
-						}
-					}
+			"auth": {
+				"signIn": {
+					"success": "messages.apis.auth.signIn.success",
+					"user_not_found": "messages.apis.auth.signIn.user_not_found",
+					"invalid_mpin": "messages.apis.auth.signIn.invalid_mpin"
+				},
+				"common": {
+					"not_admin": "messages.apis.auth.common.not_admin",
+					"not_manager_or_biller": "messages.apis.auth.common.not_manager_or_biller",
+					"not_admin_or_manager": "messages.apis.auth.common.not_admin_or_manager",
+					"not_manager": "messages.apis.auth.common.not_manager"
+				},
+				"request_otp": {
+					"success": "messages.apis.auth.request_otp.success",
+					"error": "messages.apis.auth.request_otp.error"
+				},
+				"verify_otp": {
+					"success": "messages.apis.auth.verify_otp.success"
 				}
 			}
 		}
-	},
-	"Provided phone is not registered yet.": "Provided phone is not registered yet.",
-	"ENUM_NOT_FOUND": "ENUM_NOT_FOUND",
-	"INVALID_PATH": "INVALID_PATH",
-	"Incorrect otp. Please try again.": "Incorrect otp. Please try again."
+	}
 }

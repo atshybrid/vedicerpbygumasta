@@ -28,6 +28,10 @@ router.post("/checkIn", validateManagerOrBiller, controller.checkIn);
 router.post("/attendance", validateAdminOrManager, controller.markAttendance);
 router.put("/checkOut", validateManagerOrBiller, controller.checkOut);
 router.put("/:employee_id", validateAdminOrManager, controller.updateEmployee);
-router.delete("/:employee_id", validateAdmin, controller.deleteEmployee);
+router.delete(
+  "/:employee_id",
+  validateAdminOrManager,
+  controller.deleteEmployee
+);
 
 module.exports = router;

@@ -287,10 +287,18 @@ module.exports = {
         type,
         remarks,
         recorded_by,
+        company_id,
       } = body;
 
       // Validate input
-      if (!branch_id || !amount || !expense_date || !type || !recorded_by) {
+      if (
+        !branch_id ||
+        !amount ||
+        !expense_date ||
+        !type ||
+        !recorded_by ||
+        !company_id
+      ) {
         return sendServiceMessage(
           "messages.apis.app.branch.expenses.create.invalid_body"
         );
@@ -299,6 +307,14 @@ module.exports = {
       if (amount <= 0) {
         return sendServiceMessage(
           "messages.apis.app.branch.expenses.create.invalid_amount"
+        );
+      }
+
+      // Validate Company
+      const company = await Company.findByPk(company_id);
+      if (!company) {
+        return sendServiceMessage(
+          "messages.apis.app.branch.expenses.create.invalid_company"
         );
       }
 
@@ -358,6 +374,7 @@ module.exports = {
         status: "PENDING",
         recorded_by,
         expense_date,
+        company_id,
       });
 
       return sendServiceData(expense);
@@ -531,7 +548,7 @@ module.exports = {
 
   listExpenses: async ({ query }) => {
     try {
-      const { branch: branch_id, status, fromDate, toDate } = query;
+      const { branch: branch_id, status, fromDate, toDate, company_id } = query;
 
       console.log("Query Params: ", query);
 
@@ -540,6 +557,10 @@ module.exports = {
 
       if (branch_id) {
         filter.branch_id = branch_id;
+      }
+
+      if (company_id) {
+        filter.company_id = company_id;
       }
 
       if (status) {
@@ -574,6 +595,11 @@ module.exports = {
             model: Employee,
             as: "employee",
             attributes: ["employee_id"],
+            include: {
+              model: User,
+              as: "user",
+              attributes: ["company_id"],
+            },
           },
         ],
         attributes: [

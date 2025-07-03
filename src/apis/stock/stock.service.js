@@ -140,9 +140,20 @@ module.exports = {
       let updatedCompanyItem;
 
       if (existingCompanyItem) {
-        // Update stock if the item already exists
+        // Update stock based on flow_type (same logic as branch items)
+        let newStock =
+          flow_type === "OUT"
+            ? existingCompanyItem.stock - stock
+            : existingCompanyItem.stock + stock;
+
+        if (newStock < 0) {
+          return sendServiceMessage(
+            "messages.apis.app.stock.companyItem.addStock.insufficient_stock"
+          );
+        }
+
         updatedCompanyItem = await existingCompanyItem.update({
-          stock: existingCompanyItem.stock + stock,
+          stock: newStock,
         });
       } else {
         // Create a new company item if it doesn't exist

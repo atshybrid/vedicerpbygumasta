@@ -62,6 +62,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+      ref_image: {
+        type: DataTypes.STRING(500),
+        allowNull: true,
+        comment: "Reference image URL for the cash transfer",
+      },
+      ref_details: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        comment: "Reference details/description for the cash transfer",
+      },
     },
     {
       sequelize,

@@ -807,10 +807,26 @@ module.exports = {
           "messages.apis.app.branch.expenses.get_balance.no_account"
         );
       }
-      // Return Petty Cash Balance
+      // Fetch total pending expenses for the branch
+      const pendingExpenses = await Expense.findAll({
+        where: { branch_id, status: "PENDING" },
+        attributes: [
+          [sequelize.fn("SUM", sequelize.col("amount")), "total_pending"],
+        ],
+        raw: true,
+      });
+
+      // Calculate balances
+      const totalBalance = parseFloat(pettyCashAccount.balance);
+      const pendingBalance = parseFloat(pendingExpenses[0]?.total_pending) || 0;
+      const availableBalance = totalBalance - pendingBalance;
+
+      // Return Enhanced Petty Cash Balance with pending and available amounts
 
       return sendServiceData({
-        petty_cash_balance: pettyCashAccount.balance,
+        petty_cash_balance: totalBalance.toFixed(2),
+        petty_cash_pending_balance: pendingBalance.toFixed(2),
+        petty_cash_available_balance: availableBalance.toFixed(2),
         petty_cash_account_id: pettyCashAccount.petty_cash_account_id,
         branch_id: pettyCashAccount.branch_id,
         branch_name: branch.branch_name,
@@ -931,8 +947,8 @@ module.exports = {
 
   createCashTransfer: async (req) => {
     try {
-      const { branch_id, company_id, amount, remarks } = req.body;
-
+      const { branch_id, company_id, amount, remarks, ref_image, ref_details } =
+        req.body;
       const { employee_id } = req;
 
       // Validate body
@@ -990,6 +1006,8 @@ module.exports = {
         amount,
         status: "PENDING",
         remarks: remarks || null,
+        ref_image: ref_image || null,
+        ref_details: ref_details || null,
         created_by: employee_id || null,
       });
 

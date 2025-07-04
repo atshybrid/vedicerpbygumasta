@@ -41,5 +41,9 @@ router.use(
 router.use("/uoms", checkToken, require("./uom/uom.router"));
 router.use("/users", checkToken, require("./user/user.router"));
 router.use("/vendors", checkToken, require("./vendor/vendor.router"));
-
+router.use(
+  "/company_bank_accounts",
+  checkToken,
+  require("./companybankaccount/companybankaccount.router")
+);
 module.exports = router;

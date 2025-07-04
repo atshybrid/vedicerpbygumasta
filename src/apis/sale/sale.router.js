@@ -28,6 +28,8 @@ router.get("/", validateUser, controller.listSales);
 router.post("/", validateUser, controller.createSale);
 router.post("/return", validateUser, controller.createSaleReturn);
 router.post("/handover", validateUser, controller.createHandoverRequest);
+router.post("/sendOtp", validateManagerOrBiller, controller.sendOtp);
+router.post("/verifyOtp", validateManagerOrBiller, controller.verifyOtp);
 router.put("/:sale_id", validateUser, controller.updateSale);
 router.put(
   "/handover/:handover_id",

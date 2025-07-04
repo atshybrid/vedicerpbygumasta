@@ -54,6 +54,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
+      manager_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: "CASCADE",
+      },
+      company_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: "CASCADE",
+      },
+      branch_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        onDelete: "CASCADE",
+      },
     },
     {
       sequelize,

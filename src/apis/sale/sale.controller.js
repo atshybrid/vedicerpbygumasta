@@ -324,4 +324,46 @@ module.exports = {
       );
     }
   },
+
+  sendOtp: async (req, res) => {
+    try {
+      const result = await service.sendOtp(req);
+      if (result.error) {
+        return responses.badRequestResponse(res, result.message);
+      }
+
+      return responses.successResponse(
+        res,
+        result.data,
+        getText("messages.apis.auth.request_otp.success")
+      );
+    } catch (error) {
+      console.error(`${TAG} - sendOtp: `, error);
+      return responses.internalFailureResponse(
+        res,
+        getText("messages.apis.auth.request_otp.error")
+      );
+    }
+  },
+
+  verifyOtp: async (req, res) => {
+    try {
+      const result = await service.verifyOtp(req);
+      if (result.error) {
+        return responses.badRequestResponse(res, result.message);
+      }
+
+      return responses.successResponse(
+        res,
+        result.data,
+        getText("messages.apis.auth.verify_otp.success")
+      );
+    } catch (error) {
+      console.error(`${TAG} - verifyOtp: `, error);
+      return responses.internalFailureResponse(
+        res,
+        getText("messages.apis.auth.verify_otp.error")
+      );
+    }
+  },
 };

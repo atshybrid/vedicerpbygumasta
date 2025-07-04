@@ -17,6 +17,7 @@ const {
   ItemVariation,
   Item,
   Category,
+  OTP,
 } = require("./../../../models");
 
 const { Op, sequelize } = require("sequelize");
@@ -786,7 +787,14 @@ module.exports = {
   // List All Sales
   getSales: async ({ query }) => {
     try {
-      const { fromDate, toDate, biller_id, branch_id, customer_id } = query;
+      const {
+        fromDate,
+        toDate,
+        biller_id,
+        branch_id,
+        customer_id,
+        company_id,
+      } = query;
 
       // Build filter for sales
       const salesFilter = {};
@@ -804,6 +812,7 @@ module.exports = {
       if (biller_id) salesFilter.employee_id = biller_id;
       if (branch_id) salesFilter.branch_id = branch_id;
       if (customer_id) salesFilter.customer_id = customer_id;
+      if (company_id) salesFilter.company_id = company_id;
 
       // Fetch sales with filter
       const sales = await Sale.findAll({
@@ -823,7 +832,13 @@ module.exports = {
               {
                 model: User,
                 as: "user",
-                attributes: ["branch_id", "name", "email", "mobile_number"],
+                attributes: [
+                  "branch_id",
+                  "name",
+                  "email",
+                  "mobile_number",
+                  "company_id",
+                ],
               },
             ],
           },
@@ -1000,6 +1015,9 @@ module.exports = {
         items, // array of return items
         return_by, // "branch" or "company"
         remarks,
+        manager_id,
+        company_id,
+        branch_id,
       } = req.body;
 
       const { employee_id } = req;
@@ -1008,6 +1026,9 @@ module.exports = {
       if (
         !sale_id ||
         !customer_id ||
+        !manager_id ||
+        !company_id ||
+        !branch_id ||
         !return_date ||
         !items ||
         items.length === 0
@@ -1107,6 +1128,9 @@ module.exports = {
         return_amount: totalReturnAmount,
         return_date,
         remarks: remarks || null,
+        branch_id,
+        manager_id,
+        company_id,
       });
 
       // Now for each item, adjust stock and create stock register entry
@@ -1322,7 +1346,14 @@ module.exports = {
   // List All Sale Returns
   getSaleReturns: async ({ query }) => {
     try {
-      const { fromDate, toDate, customer_id } = query;
+      const {
+        fromDate,
+        toDate,
+        manager_id,
+        branch_id,
+        customer_id,
+        company_id,
+      } = query;
 
       const returnFilter = {};
       if (fromDate && toDate) {
@@ -1337,6 +1368,9 @@ module.exports = {
         };
       }
       if (customer_id) returnFilter.customer_id = customer_id;
+      if (manager_id) returnFilter.manager_id = manager_id;
+      if (branch_id) returnFilter.branch_id = branch_id;
+      if (company_id) returnFilter.company_id = company_id;
 
       const returns = await SaleReturn.findAll({
         where: returnFilter,
@@ -1362,7 +1396,13 @@ module.exports = {
                   {
                     model: User,
                     as: "user",
-                    attributes: ["branch_id", "name", "email", "mobile_number"],
+                    attributes: [
+                      "branch_id",
+                      "name",
+                      "email",
+                      "mobile_number",
+                      "company_id",
+                    ],
                   },
                 ],
               },
@@ -2135,6 +2175,89 @@ module.exports = {
     } catch (error) {
       console.error(`${TAG} - getHandover: `, error);
       return sendServiceMessage("messages.apis.app.sale.handover.read.error");
+    }
+  },
+
+  sendOtp: async ({ body }) => {
+    try {
+      const { phone_number } = body;
+
+      const customer = await Customer.findOne({
+        where: { phone_number },
+        attributes: ["customer_name", "phone_number"],
+      });
+
+      if (!customer) {
+        return sendServiceMessage("messages.apis.auth.common.user_not_found");
+      }
+
+      const otp_code = Math.floor(100000 + Math.random() * 900000).toString();
+
+      const expires_at = new Date(Date.now() + 5 * 60 * 1000);
+
+      const otpEntry = await OTP.create({
+        phone_number,
+        otp_code,
+        expires_at,
+      });
+
+      const {
+        sendWhatsAppOTP,
+      } = require("../../../utils/whatsapp.send.service");
+      const messageSent = await sendWhatsAppOTP(
+        customer?.customer_name || "user",
+        otp_code,
+        phone_number
+      );
+
+      if (!messageSent) {
+        return sendServiceMessage("messages.apis.auth.request_otp.error");
+      }
+
+      return sendServiceData({
+        otp_id: otpEntry.otp_id,
+        phone_number: otpEntry.phone_number,
+        sent_at: otpEntry.created_at,
+        expires_at: otpEntry.expires_at,
+      });
+    } catch (error) {
+      console.error(`${TAG} - sendOtp: `, error);
+      return sendServiceMessage("messages.apis.auth.request_otp.error");
+    }
+  },
+
+  verifyOtp: async ({ body }) => {
+    try {
+      const { phone_number, otp_code } = body;
+
+      const otpEntry = await OTP.findOne({
+        where: { phone_number, otp_code },
+      });
+
+      if (!otpEntry) {
+        return sendServiceMessage(
+          "messages.apis.auth.verify_otp.incorrect_otp"
+        );
+      }
+
+      if (new Date() > otpEntry.expires_at) {
+        return sendServiceMessage("messages.apis.auth.verify_otp.otp_expired");
+      }
+
+      await otpEntry.update({ is_verified: 1 });
+
+      const customer = await Customer.findOne({
+        where: { phone_number },
+        attributes: ["customer_name", "phone_number"],
+      });
+
+      return sendServiceData({
+        name: customer?.customer_name,
+        mobile_number: customer?.phone_number,
+      });
+    } catch (error) {
+      console.error(`${TAG} - verifyOtp: `, error);
+      return sendServiceMessage("messages.apis.auth.verify_otp.error");
     }
   },
 };

@@ -178,7 +178,7 @@ module.exports = {
 
   getEmployees: async ({ query }) => {
     try {
-      const { role, branch_id } = query;
+      const { role, branch_id, company_id } = query;
 
       // Initialize filter for nested user
       const userFilter = { status: "active" }; // Only get active users
@@ -198,6 +198,9 @@ module.exports = {
       if (branch_id) {
         userFilter.branch_id = branch_id;
       }
+      if (company_id) {
+        userFilter.company_id = company_id;
+      }
 
       // Fetch employees with filters
       const employees = await Employee.findAll({
@@ -214,6 +217,7 @@ module.exports = {
               "role_id",
               "branch_id",
               "status",
+              "company_id",
             ],
             include: [
               {
@@ -222,7 +226,7 @@ module.exports = {
                 attributes: ["role_id", "role_name"],
               },
             ],
-            where: userFilter,
+            where: Object.keys(userFilter).length > 0 ? userFilter : undefined,
           },
         ],
         attributes: ["employee_id", "employee_no", "user_id", "status"],

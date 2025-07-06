@@ -1,4 +1,5 @@
-const { ItemVariation, Item } = require("./../../../models");
+const { ItemVariation, Item, Company, Branch } = require("./../../../models");
+const stockService = require("../stock/stock.service");
 const {
   sendServiceData,
   sendServiceMessage,
@@ -75,6 +76,41 @@ module.exports = {
         discount: body.discount || 0,
         image: body.image || null,
       });
+
+      // After creating the item variation, create CompanyItem and BranchItems
+      const item = await Item.findByPk(body.item_id);
+      if (item && item.company_id) {
+        // Create CompanyItem
+        await stockService.addStockToCompanyItem({
+          body: {
+            company_id: item.company_id,
+            variation_id: itemVariation.variation_id,
+            stock: body.stock || 0,
+            transaction_type: "INITIAL_STOCK",
+            flow_type: "IN",
+            remarks: "Initial stock for new item variation",
+          },
+        });
+
+        // Get all branches for the company
+        const branches = await Branch.findAll({
+          where: { company_id: item.company_id },
+        });
+
+        // Create BranchItems for each branch
+        for (const branch of branches) {
+          await stockService.addStockToBranchItem({
+            body: {
+              branch_id: branch.id,
+              variation_id: itemVariation.variation_id,
+              stock: body.stock || 0,
+              transaction_type: "INITIAL_STOCK",
+              flow_type: "IN",
+              remarks: `Initial stock for new item variation in branch ${branch.branch_name}`,
+            },
+          });
+        }
+      }
 
       return sendServiceData(itemVariation);
     } catch (error) {

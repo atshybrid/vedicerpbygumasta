@@ -107,6 +107,9 @@
 					},
 					"checkOut": {
 						"success": "messages.apis.app.employee.checkOut.success"
+					},
+					"read": {
+						"error": "messages.apis.app.employee.read.error"
 					}
 				},
 				"company": {
@@ -171,6 +174,11 @@
 					},
 					"list": {
 						"success": "messages.apis.app.companybankaccount.list.success"
+					}
+				},
+				"variation": {
+					"create": {
+						"success": "messages.apis.app.variation.create.success"
 					}
 				}
 			},

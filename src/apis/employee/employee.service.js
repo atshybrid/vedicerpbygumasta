@@ -261,6 +261,8 @@ module.exports = {
               "mobile_number",
               "role_id",
               "branch_id",
+              "role_id",
+              "branch_id",
               "status",
             ],
             where: { status: "active" }, // Only get active users

@@ -35,7 +35,8 @@
 					},
 					"cashTransfer": {
 						"list": {
-							"success": "messages.apis.app.branch.cashTransfer.list.success"
+							"success": "messages.apis.app.branch.cashTransfer.list.success",
+							"error": "messages.apis.app.branch.cashTransfer.list.error"
 						},
 						"update": "messages.apis.app.branch.cashTransfer.update",
 						"invalid_transfer": "messages.apis.app.branch.cashTransfer.invalid_transfer"

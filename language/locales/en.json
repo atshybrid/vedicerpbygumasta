@@ -117,6 +117,9 @@
 					},
 					"read": {
 						"error": "messages.apis.app.employee.read.error"
+					},
+					"delete": {
+						"success": "messages.apis.app.employee.delete.success"
 					}
 				},
 				"company": {

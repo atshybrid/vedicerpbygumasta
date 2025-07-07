@@ -876,7 +876,7 @@ module.exports = {
         await employee.user.update({ status: "inactive" });
       }
 
-      return sendServiceMessage("messages.apis.app.employee.delete.success");
+      return sendServiceData(null);
     } catch (error) {
       console.error(`${TAG} - deleteEmployee: `, error);
       return sendServiceMessage("messages.apis.app.employee.delete.error");

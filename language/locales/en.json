@@ -10,7 +10,8 @@
 						},
 						"create": {
 							"success": "messages.apis.app.branch.expenses.create.success",
-							"invalid_body": "messages.apis.app.branch.expenses.create.invalid_body"
+							"invalid_body": "messages.apis.app.branch.expenses.create.invalid_body",
+							"insufficient_funds": "messages.apis.app.branch.expenses.create.insufficient_funds"
 						},
 						"get_balance": {
 							"success": "messages.apis.app.branch.expenses.get_balance.success",
@@ -24,6 +25,9 @@
 							"invalid_body": "messages.apis.app.branch.expenses.update_status.invalid_body",
 							"success_rejected": "messages.apis.app.branch.expenses.update_status.success_rejected",
 							"already_processed": "messages.apis.app.branch.expenses.update_status.already_processed"
+						},
+						"read": {
+							"success": "messages.apis.app.branch.expenses.read.success"
 						}
 					},
 					"list": {
@@ -40,6 +44,9 @@
 						"get_balance": {
 							"success": "messages.apis.app.branch.cash_account.get_balance.success"
 						}
+					},
+					"read": {
+						"success": "messages.apis.app.branch.read.success"
 					}
 				},
 				"sale": {

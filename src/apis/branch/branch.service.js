@@ -355,10 +355,10 @@ module.exports = {
       });
 
       const totalPending = parseFloat(pendingExpenses[0]?.total_pending) || 0;
-      const availableBalance = parseFloat(pettyCashAccount.balance);
+      const availableBalance = parseFloat(pettyCashAccount.balance) - totalPending;
 
-      // Check if new expense exceeds available balance
-      if (totalPending + parseFloat(amount) > availableBalance) {
+      // Check if available balance is sufficient for the new expense
+      if (availableBalance < parseFloat(amount)) {
         return sendServiceMessage(
           "messages.apis.app.branch.expenses.create.insufficient_funds"
         );

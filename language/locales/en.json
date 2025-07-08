@@ -189,7 +189,12 @@
 				},
 				"variation": {
 					"create": {
-						"success": "messages.apis.app.variation.create.success"
+						"success": "messages.apis.app.variation.create.success",
+						"duplicate_variation": "messages.apis.app.variation.create.duplicate_variation",
+						"duplicate_barcode": "messages.apis.app.variation.create.duplicate_barcode"
+					},
+					"read": {
+						"success": "messages.apis.app.variation.read.success"
 					}
 				}
 			},
@@ -197,7 +202,8 @@
 				"signIn": {
 					"success": "messages.apis.auth.signIn.success",
 					"user_not_found": "messages.apis.auth.signIn.user_not_found",
-					"invalid_mpin": "messages.apis.auth.signIn.invalid_mpin"
+					"invalid_mpin": "messages.apis.auth.signIn.invalid_mpin",
+					"invalid_body": "messages.apis.auth.signIn.invalid_body"
 				},
 				"common": {
 					"not_admin": "messages.apis.auth.common.not_admin",

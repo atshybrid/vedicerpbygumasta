@@ -12,6 +12,7 @@ const {
 } = require("./../../../models");
 
 const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 const moment = require("moment-timezone");
 const {
@@ -355,10 +356,11 @@ module.exports = {
       });
 
       const totalPending = parseFloat(pendingExpenses[0]?.total_pending) || 0;
-      const availableBalance = parseFloat(pettyCashAccount.balance);
+      const availableBalance =
+        parseFloat(pettyCashAccount.balance) - totalPending;
 
-      // Check if new expense exceeds available balance
-      if (totalPending + parseFloat(amount) > availableBalance) {
+      // Check if available balance is sufficient for the new expense
+      if (availableBalance < parseFloat(amount)) {
         return sendServiceMessage(
           "messages.apis.app.branch.expenses.create.insufficient_funds"
         );
@@ -1021,13 +1023,31 @@ module.exports = {
   },
   getCashTransfers: async ({ query }) => {
     try {
-      const { branch_id } = query;
+      const { branch_id, fromDate, toDate, status } = query;
 
       const whereClause = {};
       if (branch_id) {
         whereClause.branch_id = branch_id;
       }
 
+      // Add date range filter if provided
+      if (fromDate || toDate) {
+        const startDate = fromDate
+          ? moment.tz(Number(fromDate), "Asia/Kolkata").startOf("day").valueOf()
+          : null;
+        const endDate = toDate
+          ? moment.tz(Number(toDate), "Asia/Kolkata").endOf("day").valueOf()
+          : null;
+
+        whereClause.created_at = {
+          ...(startDate && { [Op.gte]: Number(startDate) }),
+          ...(endDate && { [Op.lte]: Number(endDate) }),
+        };
+      }
+
+      if (status) {
+        whereClause.status = status;
+      }
       const transfers = await CashTransfer.findAll({
         where: whereClause,
         include: [

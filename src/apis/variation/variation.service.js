@@ -1,4 +1,11 @@
-const { ItemVariation, Item, Company, Branch } = require("./../../../models");
+const {
+  ItemVariation,
+  Item,
+  Company,
+  Branch,
+  CompanyItem,
+  BranchItem,
+} = require("./../../../models");
 const stockService = require("../stock/stock.service");
 const {
   sendServiceData,
@@ -8,8 +15,9 @@ const {
 const TAG = "variation.service.js";
 
 module.exports = {
-  createVariation: async ({ body }) => {
+  createVariation: async (req) => {
     try {
+      const { body, user } = req;
       // Validate body
       if (
         !body.item_id ||
@@ -65,7 +73,7 @@ module.exports = {
         }
       }
 
-      // Create item variation
+      // 1. Create item variation
       const itemVariation = await ItemVariation.create({
         item_id: body.item_id,
         variation_name: body.variation_name,
@@ -77,39 +85,35 @@ module.exports = {
         image: body.image || null,
       });
 
-      // After creating the item variation, create CompanyItem and BranchItems
-      const item = await Item.findByPk(body.item_id);
-      if (item && item.company_id) {
-        // Create CompanyItem
-        await stockService.addStockToCompanyItem({
-          body: {
-            company_id: item.company_id,
-            variation_id: itemVariation.variation_id,
-            stock: body.stock || 0,
-            transaction_type: "INITIAL_STOCK",
-            flow_type: "IN",
-            remarks: "Initial stock for new item variation",
-          },
-        });
+      // 2. Get company_id from token
+      const company_id = user.company_id;
+      if (!company_id) {
+        return sendServiceMessage(
+          "messages.apis.app.variation.create.invalid_company"
+        );
+      }
 
-        // Get all branches for the company
-        const branches = await Branch.findAll({
-          where: { company_id: item.company_id },
-        });
+      // 3. Create company_item record with stock 0
+      await CompanyItem.create({
+        company_id,
+        variation_id: itemVariation.variation_id,
+        stock: 0,
+        mrp: itemVariation.mrp,
+        discount: itemVariation.discount || 0,
+      });
 
-        // Create BranchItems for each branch
-        for (const branch of branches) {
-          await stockService.addStockToBranchItem({
-            body: {
-              branch_id: branch.id,
-              variation_id: itemVariation.variation_id,
-              stock: body.stock || 0,
-              transaction_type: "INITIAL_STOCK",
-              flow_type: "IN",
-              remarks: `Initial stock for new item variation in branch ${branch.branch_name}`,
-            },
-          });
-        }
+      // 4. Fetch all branches for this company
+      const branches = await Branch.findAll({ where: { company_id } });
+
+      // 5. For each branch, create branchitem record with stock 0
+      for (const branch of branches) {
+        await BranchItem.create({
+          branch_id: branch.id,
+          variation_id: itemVariation.variation_id,
+          stock: 0,
+          mrp: itemVariation.mrp,
+          discount: itemVariation.discount || 0,
+        });
       }
 
       return sendServiceData(itemVariation);

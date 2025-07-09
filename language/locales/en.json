@@ -10,7 +10,8 @@
 						},
 						"create": {
 							"success": "messages.apis.app.branch.expenses.create.success",
-							"invalid_body": "messages.apis.app.branch.expenses.create.invalid_body"
+							"invalid_body": "messages.apis.app.branch.expenses.create.invalid_body",
+							"insufficient_funds": "messages.apis.app.branch.expenses.create.insufficient_funds"
 						},
 						"get_balance": {
 							"success": "messages.apis.app.branch.expenses.get_balance.success",
@@ -24,6 +25,9 @@
 							"invalid_body": "messages.apis.app.branch.expenses.update_status.invalid_body",
 							"success_rejected": "messages.apis.app.branch.expenses.update_status.success_rejected",
 							"already_processed": "messages.apis.app.branch.expenses.update_status.already_processed"
+						},
+						"read": {
+							"success": "messages.apis.app.branch.expenses.read.success"
 						}
 					},
 					"list": {
@@ -31,7 +35,8 @@
 					},
 					"cashTransfer": {
 						"list": {
-							"success": "messages.apis.app.branch.cashTransfer.list.success"
+							"success": "messages.apis.app.branch.cashTransfer.list.success",
+							"error": "messages.apis.app.branch.cashTransfer.list.error"
 						},
 						"update": "messages.apis.app.branch.cashTransfer.update",
 						"invalid_transfer": "messages.apis.app.branch.cashTransfer.invalid_transfer"
@@ -40,6 +45,9 @@
 						"get_balance": {
 							"success": "messages.apis.app.branch.cash_account.get_balance.success"
 						}
+					},
+					"read": {
+						"success": "messages.apis.app.branch.read.success"
 					}
 				},
 				"sale": {
@@ -110,6 +118,9 @@
 					},
 					"read": {
 						"error": "messages.apis.app.employee.read.error"
+					},
+					"delete": {
+						"success": "messages.apis.app.employee.delete.success"
 					}
 				},
 				"company": {
@@ -178,7 +189,12 @@
 				},
 				"variation": {
 					"create": {
-						"success": "messages.apis.app.variation.create.success"
+						"success": "messages.apis.app.variation.create.success",
+						"duplicate_variation": "messages.apis.app.variation.create.duplicate_variation",
+						"duplicate_barcode": "messages.apis.app.variation.create.duplicate_barcode"
+					},
+					"read": {
+						"success": "messages.apis.app.variation.read.success"
 					}
 				}
 			},
@@ -186,7 +202,8 @@
 				"signIn": {
 					"success": "messages.apis.auth.signIn.success",
 					"user_not_found": "messages.apis.auth.signIn.user_not_found",
-					"invalid_mpin": "messages.apis.auth.signIn.invalid_mpin"
+					"invalid_mpin": "messages.apis.auth.signIn.invalid_mpin",
+					"invalid_body": "messages.apis.auth.signIn.invalid_body"
 				},
 				"common": {
 					"not_admin": "messages.apis.auth.common.not_admin",

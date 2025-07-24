@@ -55,19 +55,19 @@ app.use("/public", require("./src/public/public.router"));
 
     // Check and create default company
     const [defaultCompany, createdCompany] = await Company.findOrCreate({
-      where: { company_name: "Amonghya Tech" },
+      where: { company_name: "VEDIC HIVERY PRIVATE LIMITED" },
       defaults: {
-        address_line1: "No. 101, Main Road",
-        address_line2: "Industrial Area",
-        city: "Bangalore",
+        address_line1: "Floor No.: 2nd Floor,Building No./Flat No.: 235 ",
+        address_line2: "2nd Stage, Binnamangala,13th Cross Road,  ",
+        city: "Bengaluru",
         state: "Karnataka",
-        postal_code: "560001",
+        postal_code: "560038",
         country: "India",
-        gst_number: "29ABCDE1234FZ1",
-        pan_number: "ABCER1234F",
-        phone_number: "+918765432112",
-        email: "contact@vedic.com",
-        website: "https://vedic.com",
+        gst_number: "29AAJCV6114G1Z5",
+        pan_number: "AAJCV6114G",
+        phone_number: "+919700536080",
+        email: "info@vedichivery.com",
+        website: "https://vedichivery.com",
       },
     });
 
@@ -77,10 +77,10 @@ app.use("/public", require("./src/public/public.router"));
 
     // Check and create 'super-admin' users
     const [superAdminUser, createdSuperAdminUser] = await User.findOrCreate({
-      where: { email: "hello@kamruddin.dev" },
+      where: { email: "info@amoghnya.com" },
       defaults: {
-        name: "Kamruddin Khan",
-        mobile_number: "7908489944",
+        name: "Nagendra Nagarthi",
+        mobile_number: "9118191991",
         role_id: superAdminRole.role_id,
         company_id: defaultCompany.company_id,
       },

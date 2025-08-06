@@ -31,3 +31,9 @@ jobs:
         run: |
           echo "${{ secrets.VEDIC_PROD }}" > .env
         shell: bash
+
+      - name: Start app with PM2
+        run: |
+          pm2 delete vedicerpbygumasta || true
+          pm2 start app.js --name vedicerpbygumasta
+          pm2 save
